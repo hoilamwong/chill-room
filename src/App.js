@@ -3,6 +3,7 @@ import { CameraControls, Environment, OrbitControls, OrthographicCamera, Perspec
 import logo from './logo.svg';
 import './App.css';
 import Room from './Room'
+import Content from './Content';
 
 
 function App() {
@@ -31,6 +32,24 @@ function App() {
 				/>
 				<Room />
 			</Canvas>
+			<div className='content'>
+				<div className='content-crud'>
+					<button>
+						Create
+					</button>
+					<button>
+						Edit
+					</button>
+					<button>
+						Delete
+					</button>
+					<button>
+						Create
+					</button>
+				</div>
+				<Content/>
+			</div>
+
 		</>
   	);
 }

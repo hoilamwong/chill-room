@@ -1,4 +1,4 @@
-html, body, #root {
+#root {
   position: fixed;
   top: 0;
   left: 0;
@@ -9,4 +9,29 @@ html, body, #root {
 
 canvas {
   height:  100%;
+}
+
+.content {
+  position: absolute;
+  overflow-y: scroll;
+  top: 0;
+  right: 0px;
+  width: 30%;
+  height: 100%;
+  border-left: solid rgba(224, 224, 224, 0.089) 1px;
+
+  display: grid;
+}
+
+.content-item {
+  background-color: rgba(84, 85, 88, 0.651);
+  margin-top: 5rem;
+  padding: 1rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-crud button{
+  margin: 1ch;
 }
