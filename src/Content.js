@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaTrash } from "react-icons/fa";
 
 export default function Content({ items, handleDelete }) {
@@ -21,12 +21,26 @@ export default function Content({ items, handleDelete }) {
 		return Math.max(1, x)
 	}
 
+	const [itemColors, setItemColors] = useState({});
+
+	useEffect(() => {
+		const newColors = {};
+		items.forEach(item => {
+			if (!itemColors[item.id]) {
+				newColors[item.id] = randomColor();
+			} else {
+				newColors[item.id] = itemColors[item.id];
+			}
+		});
+		setItemColors(newColors);
+	}, [items]);
+
 	return (
 		<div className='content'>
 			{items.map((item) => (
 					// MyContent( item.id,  item.id, item.date, item.item)
-					// <div className='content-item' id={`content-item-${item.id}`} key={item.id} style={{backgroundColor:randomColor()}}>
-					<div className='content-item' id={`content-item-${item.id}`} key={item.id}>		
+					<div className='content-item' id={`content-item-${item.id}`} key={item.id} style={{backgroundColor: itemColors[item.id]}}>
+					{/* <div className='content-item' id={`content-item-${item.id}`} key={item.id}>		 */}
 							{item.date} <br/>
 							{item.item}
 							<div>
