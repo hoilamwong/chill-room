@@ -1,73 +1,47 @@
 import React from 'react'
-import { useState } from 'react'
+import { FaTrash } from "react-icons/fa";
 
-export default function Content() {
-	const [items, setItems ] = useState([
-		{
-			id: 1,
-			date: "12/18/2023",
-			item: "onee"
-		},
-		{
-			id: 2,
-			date: "12/18/2023",
-			item: "twoo"
-		},
-		{
-			id: 3,
-			date: "12/18/2023",
-			item: "three"
-		},
-		{
-			id: 4,
-			date: "12/18/2023",
-			item: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt commodi veritatis voluptas ea error voluptatem deserunt adipisci fugiat, unde et laudantium alias, harum repudiandae non impedit ipsam, eos magni quae."
+export default function Content({ items, handleDelete }) {
 
-		},
-		{
-			id: 5,
-			date: "12/18/2023",
-			item: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt commodi veritatis voluptas ea error voluptatem deserunt adipisci fugiat, unde et laudantium alias, harum repudiandae non impedit ipsam, eos magni quae."
+	const color = 
+	[ 
+		"rgba(217, 217, 217, 0.6)",
+		"rgba(164, 166, 179, 0.6)",
+		"rgba(115, 115, 115, 0.6)",
+		"rgba(94, 94, 94, 0.6)",
+	]
 
-		},
-		{
-			id: 6,
-			date: "12/18/2023",
-			item: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt commodi veritatis voluptas ea error voluptatem deserunt adipisci fugiat, unde et laudantium alias, harum repudiandae non impedit ipsam, eos magni quae."
-
-		},
-		{
-			id: 7,
-			date: "12/18/2023",
-			item: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt commodi veritatis voluptas ea error voluptatem deserunt adipisci fugiat, unde et laudantium alias, harum repudiandae non impedit ipsam, eos magni quae."
-
-		},
-		{
-			id: 8,
-			date: "12/18/2023",
-			item: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt commodi veritatis voluptas ea error voluptatem deserunt adipisci fugiat, unde et laudantium alias, harum repudiandae non impedit ipsam, eos magni quae."
-
-		},
-	])
+	const randomColor = () => {
+		var x = Math.floor(Math.random() * color.length)
+		return color[x]
+	}
 
 	const randomMargin =  (max) => {
 		var x = Math.floor(Math.random() * max)
-		console.log(Math.max(1, x));
-		return x
+		return Math.max(1, x)
 	}
 
 	return (
-		<>
+		<div className='content'>
 			{items.map((item) => (
 					// MyContent( item.id,  item.id, item.date, item.item)
-					<div className='content-item' id={`content-item-${item.id}`} key={item.id}>
-						<p style={{ minHeight:"15ch"}}>
+					// <div className='content-item' id={`content-item-${item.id}`} key={item.id} style={{backgroundColor:randomColor()}}>
+					<div className='content-item' id={`content-item-${item.id}`} key={item.id}>		
 							{item.date} <br/>
 							{item.item}
-						</p>
+							<div>
+								<button
+									type='button'
+									aria-label='delete'
+									className='delete-item'
+									onClick={() => handleDelete(item.id)}
+								>
+									<FaTrash />
+								</button>
+							</div>
 					</div>
 			)
 			)}
-		</>
+		</div>
 	)
 }
