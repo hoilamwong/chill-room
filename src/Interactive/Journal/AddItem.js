@@ -1,9 +1,20 @@
 import React from 'react'
 import { FaPlus } from "react-icons/fa6";
 
-export default function AddItem({newItem, setNewItem, handleAdd}) {
+export default function AddItem({handleAddChange, handleAdd}) {
   return (
     <form className='addForm' onSubmit={handleAdd}>
+        <label htmlFor='addItemTitle'>Title: </label>
+        <input
+          autoFocus
+          id='addItemTitle'
+          type='text'
+          placeholder='Title'
+          required
+          name='title'
+          onChange={(e) => {handleAddChange(e);}}
+        />
+        <br/>
         <label htmlFor='addItem'>Add Item</label>
         <input
           autoFocus
@@ -11,8 +22,8 @@ export default function AddItem({newItem, setNewItem, handleAdd}) {
           type='text'
           placeholder='Add Item'
           required
-          value={newItem}
-          onChange={(e) => {setNewItem(e.target.value);}}
+          name='item'
+          onChange={(e) => {handleAddChange(e);}}
         />
         <button
           type='submit'

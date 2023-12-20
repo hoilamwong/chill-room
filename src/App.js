@@ -3,9 +3,8 @@ import { useState } from 'react'
 import { CameraControls, Environment, OrbitControls, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
 import logo from './logo.svg';
 import './App.css';
-import Room from './Room'
-import Content from './Content';
-import AddItem from './AddItem';
+import Room from './Room';
+import JournalSide from './Interactive/Journal/JournalSide';
 
 
 function App() {
@@ -57,44 +56,8 @@ function App() {
 	// 	},
 	// ])
 
-	const [items, setItems] = useState(JSON.parse(localStorage.getItem("ContentList")))
-	const [newItem, setNewItem] = useState('')
-	const [createNew, setCreateNew] = useState(false)
+	const [selectedObject, setSelectedObject] = useState(null)
 
-	const saveAndsetItem = (listItems) => {
-		setItems(listItems)
-		localStorage.setItem("ContentList", JSON.stringify(listItems))
-	}
-
-	const addItem = (item) => {
-		const newId = items.length ? items[items.length - 1].id + 1 : 1
-
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, '0');
-		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-		var yyyy = today.getFullYear();
-		today = mm + '/' + dd + '/' + yyyy;
-
-		const myNewItem = {
-			id: newId,
-			date: today,
-			item: item
-		}
-		const listItems = [...items, myNewItem]
-		saveAndsetItem(listItems)
-	}
-
-	const handleAdd = (e) => {
-		e.preventDefault()
-		if (!newItem) return
-		addItem(newItem)
-		setNewItem('')
-	}
-
-	const handleDelete = (id) => {
-		const listItems = items.filter((item) => item.id !== id)
-		saveAndsetItem(listItems)
-	}
 	return (
 		<>
 			<Canvas
@@ -104,7 +67,7 @@ function App() {
 					zoom={1.5}
 					setFocalLength={[0, 10, 0]}
 				/>
-				<Environment preset="city" />
+				<Environment preset="dawn" />
 				<OrbitControls
 					maxDistance={5}
 					minAzimuthAngle={0} //horizontal limit
@@ -117,39 +80,16 @@ function App() {
 					setTarget={[0, 0, 0]}
 					rotateSpeed={0.4}
 				/>
-				<Room />
+				<Room 
+					selectedObject={selectedObject}
+					setSelectedObject={setSelectedObject}
+				/>
 			</Canvas>
-			<div className='content-panel'>
-				<div className='content-crud'>
-					<button onClick={() => setCreateNew(!createNew)}>
-						Create
-					</button>
-					<button>
-						Edit
-					</button>
-					<button>
-						Delete
-					</button>
-				</div>
-				{createNew ?
-					<AddItem
-						newItem={newItem}
-						setNewItem={setNewItem}
-						handleAdd={handleAdd}
-					/>
-					: null
-				}
-				{items == null || items.length == 0 ?
-					<p>nothing here...</p>
-					:
-					<Content
-						items={items}
-						handleDelete={handleDelete}
-					/>
-				}
-
-			</div>
-
+			{selectedObject? 
+				<JournalSide selectedObject={selectedObject}/>
+				:
+				null
+			}
 		</>
 	);
 }
